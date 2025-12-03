@@ -83,4 +83,30 @@ public class BoardService {
         BoardEntity entity = boardRepository.findById(id).orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
         boardRepository.delete(entity);
     }
+
+    public Header<List<BoardDto>> getBoardList(Pageable pageable) {
+        List<BoardDto> dtos = new ArrayList<>();
+
+        Page<BoardEntity> boardEntities = boardRepository.findAllByOrderByIdxDesc(pageable);
+        for (BoardEntity entity : boardEntities) {
+            BoardDto dto = BoardDto.builder()
+                    .idx(entity.getIdx())
+                    .author(entity.getAuthor())
+                    .title(entity.getTitle())
+                    .contents(entity.getContents())
+                    .createdAt(entity.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")))
+                    .build();
+
+            dtos.add(dto);
+        }
+
+        Pagination pagination = new Pagination(
+                (int) boardEntities.getTotalElements()
+                , pageable.getPageNumber() + 1
+                , pageable.getPageSize()
+                , 10
+        );
+
+        return Header.OK(dtos, pagination);
+    }
 }

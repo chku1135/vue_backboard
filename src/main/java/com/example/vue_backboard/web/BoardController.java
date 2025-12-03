@@ -36,4 +36,11 @@ public class BoardController {
     public void delete(@PathVariable Long id) {
         boardService.delete(id);
     }
+
+    @GetMapping("/board/list")
+    public Header<List<BoardDto>> boardList(
+            @PageableDefault(sort = {"idx"}) Pageable pageable
+    ) {
+        return boardService.getBoardList(pageable);
+    }
 }
