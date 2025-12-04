@@ -39,8 +39,10 @@ public class BoardController {
 
     @GetMapping("/board/list")
     public Header<List<BoardDto>> boardList(
-            @PageableDefault(sort = {"idx"}) Pageable pageable
+            @PageableDefault(sort = {"idx"}) Pageable pageable,
+            SearchCondition searchCondition
     ) {
-        return boardService.getBoardList(pageable);
+        return boardService.getBoardList(pageable, searchCondition);
     }
+
 }

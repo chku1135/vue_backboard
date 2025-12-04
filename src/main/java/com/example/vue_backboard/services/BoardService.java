@@ -16,6 +16,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final BoardRepositoryCustom boardRepositoryCustom;
 
     /**
      * 게시글 목록 가져오기
@@ -97,6 +98,31 @@ public class BoardService {
                     .createdAt(entity.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")))
                     .build();
 
+            dtos.add(dto);
+        }
+
+        Pagination pagination = new Pagination(
+                (int) boardEntities.getTotalElements()
+                , pageable.getPageNumber() + 1
+                , pageable.getPageSize()
+                , 10
+        );
+
+        return Header.OK(dtos, pagination);
+    }
+
+    public Header<List<BoardDto>> getBoardList(Pageable pageable, SearchCondition searchCondition) {
+        List<BoardDto> dtos = new ArrayList<>();
+
+        Page<BoardEntity> boardEntities = boardRepositoryCustom.findAllBySearchCondition(pageable, searchCondition);
+        for (BoardEntity entity : boardEntities) {
+            BoardDto dto = BoardDto.builder()
+                    .idx(entity.getIdx())
+                    .author(entity.getAuthor())
+                    .title(entity.getTitle())
+                    .contents(entity.getContents())
+                    .createdAt(entity.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")))
+                    .build();
             dtos.add(dto);
         }
 
