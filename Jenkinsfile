@@ -23,12 +23,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 withEnv(['KUBECONFIG=/var/lib/jenkins/.kube/config']) {
-                    // --set deployment.timestamp=$(date +%s)로 강제 재배포 유도
+                    // --set deployment.timestamp=\$(date +%s)로 강제 재배포 유도
                     sh """
                     helm upgrade --install backend ./helm-chart -n ${NAMESPACE} \
                         --set env.DB_PASSWORD='${DB_PASSWORD}' \
                         --set env.SPRING_PROFILES_ACTIVE=prd \
-                        --set deployment.timestamp=$(date +%s)
+                        --set deployment.timestamp=\$(date +%s)
                     """
                 }
             }
