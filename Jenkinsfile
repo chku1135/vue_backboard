@@ -6,6 +6,7 @@ pipeline {
         DB_PASSWORD = credentials('db-password')
         // Harbor Login Credentials (ID: harbor-auth)
         HARBOR_CREDS = credentials('harbor-auth')
+        KUBECONFIG_ID = 'k8s-config'
     }
     stages {
         stage('Build Backend') {
@@ -27,8 +28,16 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                // 운영 DB 프로파일 및 패스워드 주입 배포
-                sh "helm upgrade --install backend ./helm-chart -n ${NAMESPACE} --set env.DB_PASSWORD=${DB_PASSWORD} --set env.SPRING_PROFILES_ACTIVE=prd"
+                // 2. withKubeConfig 블록으로 감싸서 배포 수행
+                withKubeConfig([credentialsId: "${KUBECONFIG_ID}"]) {
+                    sh """
+                    helm upgrade --install backend ./helm-chart \
+                        -n ${NAMESPACE} \
+                        --create-namespace \
+                        --set env.DB_PASSWORD='${DB_PASSWORD}' \
+                        --set env.SPRING_PROFILES_ACTIVE=prd
+                    """
+                }
             }
         }
     }
