@@ -10,7 +10,7 @@ spring:
   datasource:
     url: jdbc:mariadb://192.168.56.21:3306/vue_test_dev
     username: root
-    password: admin123
+    password: root
 
 ---
 spring:
@@ -21,3 +21,5 @@ spring:
     url: jdbc:mariadb://mariadb-galera-service:3306/vue_project_prd
     username: root
     password: \
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect

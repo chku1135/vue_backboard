@@ -10,5 +10,5 @@ EXPOSE 8080
 # Add the application's jar to the container
 COPY target/*.jar app.jar
 
-# Run the jar file 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+# Run the jar file with prd profile explicitly
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-Dspring.profiles.active=prd", "-jar","/app.jar"]
