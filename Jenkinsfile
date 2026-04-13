@@ -2,8 +2,6 @@ pipeline {
     agent any
     environment {
         NAMESPACE = 'vue-project'
-        // Jenkins Credentials ID: db-password
-        DB_PASSWORD = credentials('db-password')
         // Harbor Login Credentials (ID: harbor-auth)
         HARBOR_CREDS = credentials('harbor-auth')
     }
@@ -26,7 +24,6 @@ pipeline {
                     // --set deployment.timestamp=\$(date +%s)로 강제 재배포 유도
                     sh """
                     helm upgrade --install backend ./helm-chart -n ${NAMESPACE} \
-                        --set env.DB_PASSWORD='${DB_PASSWORD}' \
                         --set env.SPRING_PROFILES_ACTIVE=prd \
                         --set deployment.timestamp=\$(date +%s)
                     """

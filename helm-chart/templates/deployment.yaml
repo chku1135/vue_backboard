@@ -23,4 +23,7 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               value: {{ .Values.env.SPRING_PROFILES_ACTIVE }}
             - name: DB_PASSWORD
-              value: {{ .Values.env.DB_PASSWORD }}
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: password
