@@ -1,4 +1,4 @@
-﻿spring:
+spring:
   profiles:
     active: dev
 
@@ -20,6 +20,9 @@ spring:
   datasource:
     url: jdbc:mariadb://mariadb-galera-service:3306/vue_project_prd
     username: root
-    password: \
+    password: ${DB_PASSWORD:root}
   jpa:
     database-platform: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
