@@ -1,5 +1,5 @@
-# Start with a base image containing Java runtime
-FROM openjdk:17-jdk-slim
+# Start with a stable Java 17 image
+FROM eclipse-temurin:17-jre-jammy
 
 # Add a volume pointing to /tmp
 VOLUME /tmp
