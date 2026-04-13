@@ -1,4 +1,4 @@
-﻿apiVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
@@ -11,6 +11,8 @@ spec:
     metadata:
       labels:
         app: backend
+      annotations:
+        timestamp: "now"
     spec:
       containers:
         - name: backend
