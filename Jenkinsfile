@@ -25,6 +25,7 @@ pipeline {
                     sh """
                     helm upgrade --install backend ./helm-chart -n ${NAMESPACE} \
                         --set env.SPRING_PROFILES_ACTIVE=prd \
+                        --set imagePullSecrets[0].name=harbor-registry-secret \
                         --set deployment.timestamp=\$(date +%s)
                     """
                 }
