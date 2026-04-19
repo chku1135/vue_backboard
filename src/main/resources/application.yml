@@ -9,8 +9,8 @@ spring:
       on-profile: dev
   datasource:
     url: jdbc:mariadb://192.168.56.21:3306/vue_test_dev
-    username: ${DB_USER}
-    password: root
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:root}
 
 ---
 spring:
