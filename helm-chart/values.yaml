@@ -12,7 +12,7 @@ env:
   # 외부 DB 연동 (mariadb-external-service.yaml과 이름 일치)
   DB_HOST: mariadb-galera-service
   DB_PORT: "3306"
-  DB_USER: vueroot
+  DB_USER: root
 
 # 배포 강제 갱신용 타임스탬프 (Jenkins용)
 deployment:
