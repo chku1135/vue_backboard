@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    tools {
+        maven 'maven-3.9'
+        jdk 'JDK-17'
+    }
     environment {
         NAMESPACE = 'vue-project'
         // Harbor Login Credentials (ID: harbor-auth)
