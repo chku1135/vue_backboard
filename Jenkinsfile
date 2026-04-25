@@ -27,7 +27,9 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                withEnv(['KUBECONFIG=/var/lib/jenkins/.kube/config']) {
+                // 'k8s-config'라는 ID의 Credentials를 파일로 가져와서 사용
+                withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]) {
+                //withEnv(['KUBECONFIG=/var/lib/jenkins/.kube/config']) {
                     // --set deployment.timestamp=\$(date +%s)로 강제 재배포 유도
                     sh """
                     helm upgrade --install backend ./helm-chart -n ${NAMESPACE} \
