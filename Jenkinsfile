@@ -22,6 +22,7 @@ pipeline {
                 sh 'echo $HARBOR_PW | sudo docker login 192.168.56.13:80 -u $HARBOR_USER -p $HARBOR_PW'
                 sh 'docker build -t 192.168.56.13:80/vue-project/backend:latest .'
                 sh 'docker push 192.168.56.13:80/vue-project/backend:latest'
+                }
             }
         }
         stage('Deploy') {
