@@ -16,8 +16,10 @@ pipeline {
         }
         stage('Docker Push') {
             steps {
+                withCredentials([usernamePassword(credentialsId: 'harbor-auth', passwordVariable: 'HARBOR_PW', usernameVariable: 'HARBOR_USER')]) {
                 //sh 'echo $HARBOR_CREDS_PSW | docker login 192.168.56.13:80 -u $HARBOR_CREDS_USR --password-stdin'
-                sh 'echo $HARBOR_CREDS_PSW | sudo docker login 192.168.56.13 -u $HARBOR_CREDS_USR -p $HARBOR_CREDS_PSW'
+                //sh 'echo $HARBOR_CREDS_PSW | docker login 192.168.56.13 -u $HARBOR_CREDS_USR -p $HARBOR_CREDS_PSW'
+                sh 'echo $HARBOR_PW | sudo docker login 192.168.56.13:80 -u $HARBOR_USER -p $HARBOR_CREDS_PSW'
                 sh 'docker build -t 192.168.56.13:80/vue-project/backend:latest .'
                 sh 'docker push 192.168.56.13:80/vue-project/backend:latest'
             }
