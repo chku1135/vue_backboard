@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Docker Push') {
             steps {
-                #sh 'echo $HARBOR_CREDS_PSW | docker login 192.168.56.13:80 -u $HARBOR_CREDS_USR --password-stdin'
+                //sh 'echo $HARBOR_CREDS_PSW | docker login 192.168.56.13:80 -u $HARBOR_CREDS_USR --password-stdin'
                 sh 'echo $HARBOR_CREDS_PSW | sudo docker login 192.168.56.13:80 -u $HARBOR_CREDS_USR -p $HARBOR_CREDS_PSW'
                 sh 'docker build -t 192.168.56.13:80/vue-project/backend:latest .'
                 sh 'docker push 192.168.56.13:80/vue-project/backend:latest'
